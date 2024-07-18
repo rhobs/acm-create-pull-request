@@ -51,6 +51,10 @@ inputs:
       A fork of the checked out parent repository to which the pull request branch will be pushed.
       e.g. `owner/repo-fork`.
       The pull request will be created to merge the fork's branch into the parent's base.
+  push-to-fork-token:
+    description: >
+      A token or repo scoped PAT which will be used to push the changes to fork.
+      `token` field of this object would be used if empty or not set.
   title:
     description: 'The title of the pull request.'
     default: 'Changes by create-pull-request action'

@@ -333,6 +333,7 @@ function createPullRequest(inputs) {
             core.startGroup('Determining the base and head repositories');
             const baseRemote = gitConfigHelper.getGitRemote();
             // Init the GitHub client
+            const pushToForkToken = inputs.pushToForkToken || inputs.token;
             const githubHelper = new github_helper_1.GitHubHelper(baseRemote.hostname, inputs.token);
             // Determine the head repository; the target for the pull request branch
             const branchRemoteName = inputs.pushToFork ? 'fork' : 'origin';
@@ -360,7 +361,7 @@ function createPullRequest(inputs) {
             // Configure auth
             if (baseRemote.protocol == 'HTTPS') {
                 core.startGroup('Configuring credential for HTTPS authentication');
-                yield gitConfigHelper.configureToken(inputs.gitToken);
+                yield gitConfigHelper.configureToken(pushToForkToken);
                 core.endGroup();
             }
             core.startGroup('Checking the base repository state');
@@ -1263,6 +1264,7 @@ function run() {
                 branchSuffix: core.getInput('branch-suffix'),
                 base: core.getInput('base'),
                 pushToFork: core.getInput('push-to-fork'),
+                pushToForkToken: core.getInput('push-to-fork-token'),
                 title: core.getInput('title'),
                 body: core.getInput('body'),
                 bodyPath: core.getInput('body-path'),

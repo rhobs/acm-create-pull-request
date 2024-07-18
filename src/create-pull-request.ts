@@ -23,6 +23,7 @@ export interface Inputs {
   branchSuffix: string
   base: string
   pushToFork: string
+  pushToForkToken: string
   title: string
   body: string
   bodyPath: string
@@ -46,6 +47,7 @@ export async function createPullRequest(inputs: Inputs): Promise<void> {
     core.startGroup('Determining the base and head repositories')
     const baseRemote = gitConfigHelper.getGitRemote()
     // Init the GitHub client
+    const pushToForkToken = inputs.pushToForkToken || inputs.token
     const githubHelper = new GitHubHelper(baseRemote.hostname, inputs.token)
     // Determine the head repository; the target for the pull request branch
     const branchRemoteName = inputs.pushToFork ? 'fork' : 'origin'
@@ -91,7 +93,7 @@ export async function createPullRequest(inputs: Inputs): Promise<void> {
     // Configure auth
     if (baseRemote.protocol == 'HTTPS') {
       core.startGroup('Configuring credential for HTTPS authentication')
-      await gitConfigHelper.configureToken(inputs.gitToken)
+      await gitConfigHelper.configureToken(pushToForkToken)
       core.endGroup()
     }
 
