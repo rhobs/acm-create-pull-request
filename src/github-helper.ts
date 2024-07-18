@@ -85,6 +85,7 @@ export class GitHubHelper {
     const {data: pulls} = await this.octokit.rest.pulls.list({
       ...this.parseRepository(baseRepository),
       state: 'open',
+      owner: headOwner,
       head: headBranch,
       head_repo: headRepository,
       base: inputs.base
