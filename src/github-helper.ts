@@ -89,6 +89,9 @@ export class GitHubHelper {
       head_repo: headRepository,
       base: inputs.base
     })
+
+    core.info('info of pulls')
+    core.info(JSON.stringify(pulls))
     core.info(`Attempting update of pull request`)
     const {data: pull} = await this.octokit.rest.pulls.update({
       ...this.parseRepository(baseRepository),
