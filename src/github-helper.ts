@@ -59,7 +59,8 @@ export class GitHubHelper {
         head_repo: headRepository,
         base: inputs.base,
         body: inputs.body,
-        draft: inputs.draft
+        draft: inputs.draft,
+        maintainer_can_modify: false,
       })
       core.info(
         `Created pull request #${pull.number} (${headBranch} => ${inputs.base})`
