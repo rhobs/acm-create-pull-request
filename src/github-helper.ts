@@ -86,6 +86,7 @@ export class GitHubHelper {
       ...this.parseRepository(baseRepository),
       state: 'open',
       head: headBranch,
+      head_repo: headRepository,
       base: inputs.base
     })
     core.info(`Attempting update of pull request`)

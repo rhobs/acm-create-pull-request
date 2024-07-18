@@ -1135,7 +1135,7 @@ class GitHubHelper {
             }
             // Update the pull request that exists for this branch and base
             core.info(`Fetching existing pull request`);
-            const { data: pulls } = yield this.octokit.rest.pulls.list(Object.assign(Object.assign({}, this.parseRepository(baseRepository)), { state: 'open', head: headBranch, base: inputs.base }));
+            const { data: pulls } = yield this.octokit.rest.pulls.list(Object.assign(Object.assign({}, this.parseRepository(baseRepository)), { state: 'open', head: headBranch, head_repo: headRepository, base: inputs.base }));
             core.info(`Attempting update of pull request`);
             const { data: pull } = yield this.octokit.rest.pulls.update(Object.assign(Object.assign({}, this.parseRepository(baseRepository)), { pull_number: pulls[0].number, title: pulls[0].title, body: pulls[0].body || undefined, draft: pulls[0].draft }));
             core.info(`Updated pull request #${pull.number} (${headBranch} => ${inputs.base})`);
