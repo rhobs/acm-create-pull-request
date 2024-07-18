@@ -92,8 +92,9 @@ export class GitHubHelper {
     const {data: pull} = await this.octokit.rest.pulls.update({
       ...this.parseRepository(baseRepository),
       pull_number: pulls[0].number,
-      title: inputs.title,
-      body: inputs.body
+      title: pulls[0].title,
+      body: pulls[0].body || undefined,
+      draft: pulls[0].draft,
     })
     core.info(
       `Updated pull request #${pull.number} (${headBranch} => ${inputs.base})`
